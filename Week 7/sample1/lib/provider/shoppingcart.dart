@@ -12,9 +12,11 @@ class ShoppingCart extends ChangeNotifier {
 
   void addItem(Item item) {
     _products.add(item);
+    notifyListeners();
   }
 
   void removeItem(Item item) {
     _products.remove(item);
+    notifyListeners();
   }
 }
