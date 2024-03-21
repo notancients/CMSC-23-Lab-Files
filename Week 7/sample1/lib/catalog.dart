@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample1/model/item.dart';
+import 'package:sample1/provider/shoppingcart.dart';
 
 class Catalog extends StatefulWidget {
   const Catalog({super.key});
@@ -17,31 +19,32 @@ class _CatalogState extends State<Catalog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Catalog")),
-        body: Center(
-          child: Column(
-            children: [
-              ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                        leading: const Icon(Icons.shop),
-                        title: Text(products[index].name),
-                        trailing: TextButton(
-                          child: const Text("Add"),
-                          onPressed: () {
-                            print("Add to cart.");
-                          },
-                        ));
-                  })
-            ],
-          ),
+      appBar: AppBar(title: const Text("Catalog")),
+      body: Center(
+        child: Column(
+          children: [
+            ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      leading: const Icon(Icons.shop),
+                      title: Text(products[index].name),
+                      trailing: TextButton(
+                        child: const Text("Add"),
+                        onPressed: () {
+                          context.read<ShoppingCart>().addItem(products[index]);
+                        },
+                      ));
+                })
+          ],
         ),
+      ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.shopping_cart)
+        child: Icon(Icons.shopping_cart),
         onPressed: () {
-          Navigator.pushNamed(context, routeName)
+          Navigator.pushNamed(context, '/');
         },
-        ),);
+      ),
+    );
   }
 }
